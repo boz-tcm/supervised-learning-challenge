@@ -31,8 +31,29 @@
 ## Overview of the Analysis
 
 - ### Purpose
+    #### The purpose of this analysis was to construct, evaluate, and recommend an appropriate model for the prediction of borrower creditworthiness in peer-to-peer lending.  
+    
+    We'll use an historical dataset of lending activity, sourced from a peer-to-peer lending services company, to build two models designed to predict the creditworthiness of borrowers:
 
 - ### The Financial Data
+    We used historical financial data provided by a peer-to-peer lending services company as the basis for modeling and predicting borrower creditworthiness in the peer-to-peer lending domain.
+
+    Our historical financial dataset consisted of 77,536 individual loans, each of which had been assigned a binary classification loan health status (`loan_status`) of either 'healthy' or 'high risk of default', numerically encoded within our dataset as 0 or 1, respectively.  Loan health status represented our target, or the dependent variable that we sought to predict, or explain, in our analysis as proxy for borrower creditworthiness.  The peer-to-peer lending dataset also contained 7 features, or independent variables, to investigate as potential explanatory, or predictor, variables for loan health.  Like the target variable, all predictor variables were either numerical or numerically pre-encoded by the peer-to-peer lending company prior to our receipt of the dataset.
+
+    The 7 predictor variables included the following (descriptor: `feature variable name`):
+    - Loan Size ($): `loan_size`
+    - Loan Interest Rate (%): `interest_rate`
+    - Borrower's Annual Income ($): `borrower_income`
+    - Debt-to-Income Ratio: `debt_to_income`
+    - Number of Accounts: `num_of_accounts`
+    - Number of Loan Derogatory Marks: `derogatory_marks`
+    - Total Debt: `total_debt`
+
+    As a bonus to our analysis, we will not only evaluate the power of our models and the explanatory variables collectively to predict loan health status, we will also attempt to compare the power of the explanatory variables ***individually*** to explain, or predict, this status.
+
+    Although all of our raw data were numerical, and therefore did not require encoding, such as One-Hot or Label encoding routines, we recommend exploring standardization of the numerical feature fields in a future pre-processing exercise, using such routines as StandardScalar() for roughly normally distributed fields, MinMaxScaler for non-normally distributed fields, and MaxAbsScaler() for sparse, non-normally distributed fields.
+
+    When evaluating our peer-to-peer lending dataset, we observed that the vast majority of loans were healthy (96.8%; n = 75,036), while a slim minority were considered at high risk of default (3.2%, n = 2500).  In practice, this observation of an imbalanced target class is common in financial lending, credit card fraud detection, and email spam detection, characterized by a high frequency of observations in the majority label (e.g., performing loans), and relatively few observations in the minority label (e.g., defaulted loans).  Unless accounted for and corrected, this imbalance will lead to bias in our models, and potentially inaccurate conclusions reflecting the overwhelming influence of the majority class label.  Imbalance is particularly concerning when the minority label is what we seek to predict, as in our case, where we are attempting to predict loans at high risk of default (minority label '1', or 'True').
 
 - ### The Models
 
