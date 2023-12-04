@@ -40,22 +40,35 @@
     
     The peer-to-peer lending dataset contained 7 features, or independent variables, to investigate as potential explanatory, or predictor, variables for loan health.  Like the target variable, all predictor variables were either numerical in origin or numerically pre-encoded by the peer-to-peer lending company prior to our receipt of the dataset.
 
-    The 7 predictor variables included the following (listed below as descriptor: `feature variable name` pairs):
+    The 7 predictor variables included the following (listed below as 'descriptor: `feature variable name`' pairs):
     - Loan Size ($): `loan_size`
     - Loan Interest Rate (%): `interest_rate`
     - Borrower's Annual Income ($): `borrower_income`
-    - Debt-to-Income Ratio: `debt_to_income`
+    - Debt-to-Income Ratio: `debt_to_income` (the only dataset feature that may be considered standardized)
     - Number of Accounts: `num_of_accounts`
     - Number of Loan Derogatory Marks: `derogatory_marks`
     - Total Debt: `total_debt`
 
-    As a supplementary bonus to our analysis, we will not only evaluate the power of our models and the explanatory variables, collectively, to predict loan health status, we will also attempt to compare the power of *each* explanatory variable to *individually* explain, or predict, loan health.
+    As a supplementary bonus to our analysis, we not only evaluate the power of our models and the explanatory variables, collectively, to predict loan health status, we also attempt to compare the power of *each* explanatory variable to *individually* explain, or predict, loan health.
 
     Although all of our raw data were numerically provided, and therefore did not require encoding, such as One-Hot or Label encoding routines, we nevertheless recommend exploring, in a future pre-processing exercise, standardization of the numerical feature fields, using such routines as StandardScalar(), for roughly normally distributed fields, MinMaxScaler, for non-normally distributed fields, and MaxAbsScaler(), for sparse, non-normally distributed fields.
 
     When evaluating our peer-to-peer lending dataset, we observed that the vast majority of loans were considered healthy (96.8%; n = 75,036), while a slim minority were labeled at high risk of default (3.2%, n = 2500).  In practice, such observation of an imbalanced target class is common in financial lending, credit card fraud detection, and email spam detection, which are characterized by a high frequency of observations in the majority label (e.g., performing loans), and relatively few observations in the minority label (e.g., defaulted loans).  Unless accounted and corrected for, this imbalance will lead to bias in our models, and potentially inaccurate conclusions, reflecting overwhelming influence of the majority class label.  Imbalance is particularly concerning when the minority label is what we seek to predict, such as in our case, where we are attempting to predict loans at high risk of default (minority label '1', or 'True' in our classification schema).
 
 - ### The Models
+    We built and assessed two alternative logistic regression models to predict the creditworthiness of borrowers in the peer-to-peer lending domain.
+    - Model 1: Logistic regression model fit to the originally provided dataset as-is.
+    - Model 2: Logistic regression model fit to a resampled version of our original dataset, with the intention of correcting for an imbalanced dataset.
+
+    According to Pindyck and Rubinfeld, while a traditional linear regression model may be applied to datasets where the features, or explanatory variables, are binary, application of linear regression is more complex when the target, or dependent, variable is binary, such as in our case, where the features are either numerically continuous or binary, and the target variable, loan health, that we seek to predict is binary, either healthy ('0') or high risk of default status ('1') (1998).
+
+    Generally, there are three *linear* binary outcome models that are available to us in this situation: the linear probability model, the probit model, and the logit, or logistic model.
+    These models assume a linear relationship between *the likelihood, or probability*, of each feature, or independent variable, to explain our binary target variable, loan health.
+    - The problem with the linear probability model for prediction is that while it is consistent and unbiased, it does not guarantee that the prediction lies within 0 and 1.
+    - 
+
+- Reference:
+    - Pindyck, Robert S. and Daniel L. Rubinfeld, "Econometric Models and Economic Forecasts", 1998, 4th Ed, McGraw-Hill, pp 298-333.
 
 - ### The Modeling
 
