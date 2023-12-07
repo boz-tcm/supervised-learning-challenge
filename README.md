@@ -69,9 +69,11 @@
         - Pindyck and Rubinfeld argue that "[W]hile the probit model is more appealing than the linear probability model, it generally involves nonlinear maximum-likelihood estimation,"given the assumption of a normal distribution for the cumulative probability function transform.  "In addition, the theoretical justification for employing the probit model is somewhat limited" (1998).
         - In contrast to the probit model, the logit model assumes the logistic distribution for the cumulative probability distribution function transform.  Pindyck and Rubinfeld note that the logit and probit formulations are quite similar with respect to their cumulative probability functions, however the logistic distribution produces slightly fatter tails.  Given their similarities and because the logit model is easier to use computationally, presumably because its cumulative distribution function takes on a convenient algebraic form when applying maximum likelihood estimation (MLE), specifically in the form of log-likelihood, to solve for the model's regression parameters, the logit model is often used in place of the probit model.
 - References:
-    - Pindyck, Robert S. and Daniel L. Rubinfeld (1998), *Econometric Models and Economic Forecasts*, 4th Ed, McGraw-Hill, pp 298-333.
+  
     - Breen, Richard, Kristian Karlson, Anders Holm (July 2018), "Interpreting and Understanding Logits, Probits, and Other Nonlinear Probability Models," *Annual Review of Sociology*, https://www.annualreviews.org/doi/10.1146/annurev-soc-073117-041429.
-    - Jason Brownlee (October 28, 2019), "A Gentle Introduction to Logistic Regression With Maximum Likelihood Estimation," https://machinelearningmastery.com/logistic-regression-with-maximum-likelihood-estimation/
+    - Brownlee, Jason (October 28, 2019), "A Gentle Introduction to Logistic Regression With Maximum Likelihood Estimation," https://machinelearningmastery.com/logistic-regression-with-maximum-likelihood-estimation.
+    - Perraillon, Marcelo (2019), "Week 12: Linear Probability Models, Logistic and Probit", https://clas.ucdenver.edu/marcelo-perraillon/sites/default/files/attached-files/week_12_lpn_logit_0.pdf
+    - Pindyck, Robert S. and Daniel L. Rubinfeld (1998), *Econometric Models and Economic Forecasts*, 4th Ed, McGraw-Hill, pp 298-333.
 
 - ### The Modeling
 
