@@ -77,8 +77,7 @@ Alternative sampling options available to us were random and synthetic sampling,
 
 For modeling purposes, our peer-to-peer lending dataset was split between train and test data using [scikit-learn's](https://scikit-learn.org/stable/) `sklearn.model_selection` library function [train_test_split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html), using the default 75%/25% train/test split and the stratify argument set to 'y' to conserve label proportion between both train and test datasets (moreover, data are shuffled, by default, prior to splitting).
 
-Following the splitting of the original dataset into train and test datasets, scikit-learn's `sklearn.linear_model` library function [LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression) was used to 
-
+Following the splitting of the original dataset into train and test datasets, scikit-learn's `sklearn.linear_model` library function [LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression) was used to fit logistic regression models to both the original train dataset and a randomly oversampled version of the train dataset to correct for material imbalance in the original dataset.  Because our peer-to-peer borrower creditworthiness analysis entails simple binomial classification, the logistic regression function's solver parameter was specified as 'liblinear' ("Library for Large Linear Classification"), as opposed to the function's default solver 'lbfgs' ("Limited-memory Broyden–Fletcher–Goldfarb–Shanno"), which is more flexible and appropriate for multinomial class problems, but not necessary in this case.
 
 In this section, describe the analysis you completed for the machine learning models used in this Challenge. This might include:
 
