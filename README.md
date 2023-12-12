@@ -71,13 +71,15 @@
     - Our peer-to-peer borrower creditworthiness analysis allowed us to illustrate the practical benefits of applying logistic regression to model and predict our binomial outcome variable loan health status.  We describe our logistic modeling in the following section.
 
 - ### The Modeling
-Two logistic regression models were fit to two version of our peer-to-peer lending dataset.  Logistic Regression Model #1 was fit to the original, unaltered lending dataset, while Logistic Regression Model #2 was fit to a modified version of the lending dataset, where we accounted for a material class imbalance observed in the original dataset between healthy (majority class label, weight 96.8%) and high risk of default (minority class label, weight 3.2%) loans by randomly oversampling the minority class, resulting in a resampled, *balanced* dataset.
+Two logistic regression models were fit to two version of our peer-to-peer lending dataset.  Logistic Regression Model #1 was fit to the original, unaltered lending dataset, while Logistic Regression Model #2 was fit to a modified version of the lending dataset, where we accounted for a material class imbalance observed in the original dataset between healthy (majority class label, weight 96.8%) and high risk of default (minority class label, weight 3.2%) loans by randomly oversampling the minority class, resulting in a resampled, *balanced* dataset. For resampling, we relied on [scikit-learn's](https://imbalanced-learn.org/stable/) `imblearn.over_sampling` library function [RandomOverSampler](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.RandomOverSampler.html#imblearn.over_sampling.RandomOverSampler).
 
 Alternative sampling options available to us were random and synthetic sampling, and within each type of sampling, over and undersampling the minority and majority classes, respectively.  Our chosen resampling method, *random oversampling*, randomly samples from the minority class, *duplicating* instances of the minority class until the number of minority class data points equal the number of majority class data points from the original dataset.  Note that this random oversampling methodology was applied to only the training segment portion (75%) of our original dataset, while the original testing portion (25%) was retained unaltered for prediction purposes in both models.  Training for Model #2 was thus based on 56,277 observations for both labels.  Because we do not create *new* instances in the minority label, rather only duplicates of the minority label when randomly oversampling, the methodology leads to underestimating the true variation in the minority label.  This resampling technique may therefore lead to overfitting the training data, which could be detected, all else equal, by observing better prediction performance on training data relative to testing.
 
 For modeling purposes, our peer-to-peer lending dataset was split between train and test data using [scikit-learn's](https://scikit-learn.org/stable/) `sklearn.model_selection` library function [train_test_split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html), using the default 75%/25% train/test split and the stratify argument set to 'y' to conserve label proportion between both train and test datasets (moreover, data are shuffled, by default, prior to splitting).
 
 Following the splitting of the original dataset into train and test datasets, scikit-learn's `sklearn.linear_model` library function [LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression) was used to fit logistic regression models to both the original train dataset and a randomly oversampled version of the train dataset to correct for material imbalance in the original dataset.  Because our peer-to-peer borrower creditworthiness analysis entails simple binomial classification, the logistic regression function's solver parameter was specified as 'liblinear' ("Library for Large Linear Classification"), as opposed to the function's default solver 'lbfgs' ("Limited-memory Broyden–Fletcher–Goldfarb–Shanno"), which is more flexible and appropriate for multinomial class problems, but not necessary in this case.
+
+Once the models were fit to the two sets of training data, prediction performance and accuracy were evaluated based on the testing dataset.
 
 In this section, describe the analysis you completed for the machine learning models used in this Challenge. This might include:
 
@@ -89,19 +91,20 @@ In this section, describe the analysis you completed for the machine learning mo
 
 ## Results of the Analysis
 
+The Logistic Regression models were fit to two different training versions of the peer-to-peer lending dataset: the original training dataset as-is for Model #1 and a resampled version of the original training dataset, randomly oversampled on the minority 'high-risk of default' loan health label to yield a balanced training dataset for Model #2.
+
+Balanced accuracy scores, along with precision and recall scores, were measured for the two logistic regression models to evaluate accuracy and performance in the context of a common testing dataset. 
+
 - ### Machine Learning Model 1
-
+    - Traditional model accuracy is the ratio of true predictions relative to all predictions made, or the ratio of true-positive plus true-negative predictions to total predictions.  Traditional accuracy for Model #1 was 0.993, or 99.3% accuracy.  However, a more accurate depiction of model accuracy for materially imbalanced testing datasets, in particular when the negative label dominates, as in our case, i.e., healthy loans, is scikit-learn's implementation of the balanced accuracy score, which seeks to correct bias in the traditional accuracy score for imbalanced datasets by calculating the *macro average* of the model's true positive rate and the true negative rate, or [(TPR + TNR) / 2], which is also [(sensitivity + specificity) / 2] (c.f. https://www.statology.org/balanced-accuracy).  A more accurate depiction of Model 1's accuracy is therefore the balanced accuracy score of 0.948, or 94.8%, which reveals a material overstatement in Model 1's accuracy had we relied on the traditional accuracy measure.
+    - Precision Score for our Model #1 specification was 0.874, or 87.4%, as derived from our confusion matrix: 563 / (563 + 81) = True-Positive / (True-Positive + False-Positive).  Precision represents the proportion of true-positives predicted to all positives predicted (out of all positives predicted, what proportion was truly positive).  In other words, whenever Model #1 predicted a high-risk loan, how often was it correct?  In this case 87.4% of the time, where only 81 healthy loans, from a large pool of healthy loans, were incorrectly predicted, or classified, as at high risk of default. 
+    - Recall Score for our Model #1 specification was 0.901, or 90.1%, as derived from our confusion matrix: 563 / (563 + 62) = True Positive Rate = Sensitivity = True-Positive / (True-Positive + False-Negative).  Recall represents the proportion of all true cases correctly predicted as true.  In other words, what proportion of high-risk loans were correctly predicted, or detected, as high risk?  In this case 90.1% of high-risk loans were correctly predicted by Model #1, with only 62 of the high-risk loans not detected by the model and incorrectly classified as healthy.  Given that we are more concerned about identifying high-risk loans than incorrectly classifying healthy loans and the economic cost of not detecting high-risk loans, recall in this case is more important to us than precision.
 - ### Machine Learning Model 2
+    - Balanced accuracy score for Model #2 was 0.996, or 99.6% = (TPR + TNR / 2) = [(623 / (623 + 2)) + (18668 / (18668 + 91))] / 2 = (0.9968 + 0.9951) / 2.  Traditional accuracy score of 0.995, or 99.5%, is nearly equivalent to balanced accuracy score, calculated as ((623 + 18668) / (623 + 18668 + 2 + 91)) = true predictions / all predictions.
+    - Precision Score for Model #2 was 0.873, or 87.3% = 623 / (623 + 91).
+    - Recall Score for Model #2 was 0.997, or 99.7% = 623 / (623 + 2).
 
-Using bulleted lists, describe the balanced accuracy scores and the precision and recall scores of all machine learning models.
-
-* Machine Learning Model 1:
-  * Description of Model 1 Accuracy, Precision, and Recall scores.
-
-
-
-* Machine Learning Model 2:
-  * Description of Model 2 Accuracy, Precision, and Recall scores.
+    Note: Scores derived above from each model's confusion matrix reconcile to the respective classification report.
 
 - ## Summary of the Analysis
 
