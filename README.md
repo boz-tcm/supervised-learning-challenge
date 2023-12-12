@@ -81,14 +81,6 @@ Following the splitting of the original dataset into train and test datasets, sc
 
 Once the models were fit to the two sets of training data, prediction performance and accuracy were evaluated based on the testing dataset.
 
-In this section, describe the analysis you completed for the machine learning models used in this Challenge. This might include:
-
-* Explain the purpose of the analysis.
-* Explain what financial information the data was on, and what you needed to predict.
-* Provide basic information about the variables you were trying to predict (e.g., `value_counts`).
-* Describe the stages of the machine learning process you went through as part of this analysis.
-* Briefly touch on any methods you used (e.g., `LogisticRegression`, or any resampling method).
-
 ## Results of the Analysis
 
 The Logistic Regression models were fit to two different training versions of the peer-to-peer lending dataset: the original training dataset as-is for Model #1 and a resampled version of the original training dataset, randomly oversampled on the minority 'high-risk of default' loan health label to yield a balanced training dataset for Model #2.
@@ -100,7 +92,7 @@ Balanced accuracy scores, along with precision and recall scores, were measured 
     - Precision Score for our Model #1 specification was 0.874, or 87.4%, as derived from our confusion matrix: 563 / (563 + 81) = True-Positive / (True-Positive + False-Positive).  Precision represents the proportion of true-positives predicted to all positives predicted (out of all positives predicted, what proportion was truly positive).  In other words, whenever Model #1 predicted a high-risk loan, how often was it correct?  In this case 87.4% of the time, where only 81 healthy loans, from a large pool of healthy loans, were incorrectly predicted, or classified, as at high risk of default. 
     - Recall Score for our Model #1 specification was 0.901, or 90.1%, as derived from our confusion matrix: 563 / (563 + 62) = True Positive Rate = Sensitivity = True-Positive / (True-Positive + False-Negative).  Recall represents the proportion of all true cases correctly predicted as true.  In other words, what proportion of high-risk loans were correctly predicted, or detected, as high risk?  In this case 90.1% of high-risk loans were correctly predicted by Model #1, with only 62 of the high-risk loans not detected by the model and incorrectly classified as healthy.  Given that we are more concerned about identifying high-risk loans than incorrectly classifying healthy loans and the economic cost of not detecting high-risk loans, recall in this case is more important to us than precision.
 - ### Machine Learning Model 2
-    - Balanced accuracy score for Model #2 was 0.996, or 99.6% = (TPR + TNR / 2) = [(623 / (623 + 2)) + (18668 / (18668 + 91))] / 2 = (0.9968 + 0.9951) / 2.  Traditional accuracy score of 0.995, or 99.5%, is nearly equivalent to balanced accuracy score, calculated as ((623 + 18668) / (623 + 18668 + 2 + 91)) = true predictions / all predictions.
+    - Balanced accuracy score for Model #2 was 0.996, or 99.6% = (TPR + TNR / 2) = [(623 / (623 + 2)) + (18668 / (18668 + 91))] / 2 = (0.9968 + 0.9951) / 2.  Traditional accuracy score of 0.995, or 99.5%, was nearly equivalent to balanced accuracy score, calculated as ((623 + 18668) / (623 + 18668 + 2 + 91)) = true predictions / all predictions.
     - Precision Score for Model #2 was 0.873, or 87.3% = 623 / (623 + 91).
     - Recall Score for Model #2 was 0.997, or 99.7% = 623 / (623 + 2).
 
